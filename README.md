@@ -1,5 +1,6 @@
 # VoRF
-Official Implementation of Volumetric Relightable Fields
+Official Implementation of Volumetric Relightable Faces
+
 
 # TODO
 - [ ] Update ReadME
