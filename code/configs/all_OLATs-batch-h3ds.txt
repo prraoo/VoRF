@@ -1,0 +1,222 @@
+#### ~~~~~ TRAINING SCRIPT - shading n/w ~~~~~ ###
+# ### NOTES: 50  ids and 1 illumn shading with decay=0.9, no mask, batch size = 1, sampling prob = 0.4
+
+# basedir = /HPS/prao2/work/NeRF/OLAT/batch-shading/
+# expname = OLAT_c2_batch_OLATs_latent-50IDs-no_mask-fullres-reg_loss-align_fix-HDR
+# datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/nerf-align-50IDs-relit
+
+# basedir = /HPS/prao2/work/NeRF/OLAT/batch-fit/
+basedir = /CT/VRF/work/prao3/batch-fit-3dpr/
+# expname = OLAT_c2_batch_OLATs_latent-300IDs-300EMAPs-relit-multi-gpu-shading/350
+# datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/nerf-align-300IDs-test-unseen-3views/5
+
+# datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/nerf-align-test-h3ds-3views/0
+num_relit_emaps=2
+# fit=True
+render_multi_gpu=True
+
+# Shading Network
+use_shading_nw=True
+sh_netdepth = 8
+sh_netdepth_fine = 8
+switch_prob = 1.0
+use_HDR_loss=True
+
+## latent Embeddings
+latent_vec_size = 256
+use_code_regularisation = True
+reg_loss_weight = 0.001
+
+## perceptual loss
+use_perceptual_loss = False
+perceptual_loss_weight = 0.1
+
+dataset_type = llff
+factor = -1 # scale down the images
+render_factor = 8
+llffhold = 20 #1/N to test
+
+N_rand = 1024
+N_samples = 64
+N_importance = 64
+batch_size = 1
+use_viewdirs = True
+raw_noise_std = 1e0
+no_ndc=True
+# lrate=0
+latent_lrate=1e-3
+decay_rate=0.95
+train_all=True
+num_workers=0
+
+# Light Direction
+viewdirs_dims=3
+use_light_dirs=True
+light_idx = [0]
+
+# Masking
+load_mask = True
+acc_loss = False
+acc_loss_weight = 0.1
+
+#Aligned Multiple IDs
+# poses_bounds_fn=poses_bounds_aligned_2views_nelf.npy
+
+poses_bounds_fn=poses_bounds_aligned_1view_nelf.npy
+# poses_bounds_fn=poses_bounds_aligned_3views_nelf.npy
+# poses_bounds_fn=poses_bounds_aligned_scaled_3views.npy
+# poses_bounds_fn=poses_bounds_aligned.npy
+# poses_bounds_fn=poses_bounds_aligned_nelf.npy
+
+#Custom Mapping
+use_custom_mapping=False
+use_sine=False
+skips=[4]
+
+# Positional Encoding
+multires = 10
+multires_views = 4
+multires_light_dirs = 4
+
+#####################
+# ### ~~~~~ TRAINING SCRIPT - GEOM n/w ~~~~~ ###
+# ## NOTES:
+# 
+# # basedir = /HPS/prao2/work/NeRF/OLAT/batch-multiple-IDs/
+# # expname = OLAT_c2_batch_OLATs_latent-2IDs-100EMAPs-relit-emap
+# # datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/nerf-align-2IDs-relit
+# # aux_datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/relighting/outdoor
+# 
+# 
+# basedir = /HPS/prao2/work/NeRF/OLAT/batch-fit/
+# expname = OLAT_c2_batch_OLATs_latent-50IDs-100EMAPs-relit-emap/10
+# datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/nerf-align-50IDs-test-unseen-3views/0
+# emap_dir = /HPS/prao2/static00/datasets/envmaps
+# num_relit_emaps = 100
+# 
+# fit=True 
+# use_latent_emap=True
+# use_emaps=True
+# 
+# render_multi_gpu=True
+# 
+# latent_vec_size = 128
+# # poses_bounds_fn=poses_bounds_aligned_new.npy
+# poses_bounds_fn=poses_bounds_aligned_3views.npy
+# 
+# # latent Embeddings
+# 
+# use_code_regularisation = True
+# reg_loss_weight = 0.001
+# 
+# ## Hard Surface Loss
+# use_hard_loss = True
+# hard_loss_weight = 0.1
+# 
+# ## perceptual loss
+# use_perceptual_loss = False
+# perceptual_loss_weight = 0.0
+# crop_dim=32
+# perceptual_loss_prob = 0.0
+# 
+# dataset_type = llff
+# bds_min_scale=1.0
+# bds_max_scale=1.0
+# 
+# factor = 8 # scale down the images
+# render_factor = 0
+# llffhold = 20 #1/N to test
+# # num_workers = 4
+# num_workers = 0
+# 
+# # chunk=65536
+# N_rand = 1024
+# N_samples = 64
+# N_importance = 64
+# batch_size = 1
+# use_viewdirs = True
+# raw_noise_std = 1e0
+# no_ndc=True
+# lrate=0
+# latent_lrate=5e-4
+# decay_rate=0.95
+# train_all=True
+# 
+# ## Light Direction
+# viewdirs_dims=3
+# use_light_dirs=True
+# light_idx = [0]
+# 
+# ## Masking
+# load_mask = True
+# acc_loss = False
+# acc_loss_weight = 0.1
+# 
+# ## Custom Mapping
+# use_custom_mapping=False
+# use_sine=False
+# skips=[4]
+# 
+# ## Positional Encoding
+# multires = 10
+# multires_views = 4
+# multires_light_dirs = 4
+# 
+# ## Shading Network
+# use_shading_nw=False
+
+#####################
+## NOTES: Training with SIREN architecture for 50 Identities with latent regualrisations.
+## 
+# basedir = /HPS/prao2/work/NeRF/OLAT/batch-SIREN/
+# expname = OLAT_c2_batch_OLATs_latent-50IDs-no_mask-fullres-reg_loss-align_fix-SIREN
+# datadir = /HPS/prao2/static00/datasets/OLAT_c2-Multiple-IDs/nerf-align-50IDs
+# 
+# # ## latent Embeddings
+# latent_vec_size = 8
+# use_code_regularisation = True
+# reg_loss_weight = 0.001
+# 
+# num_workers=8
+# dataset_type = llff
+# 
+# factor = -1 # scale down the images
+# llffhold = 20 #1/N to test
+# 
+# N_rand = 1024
+# N_samples = 64
+# N_importance = 64
+# batch_size = 1
+# use_viewdirs = True
+# raw_noise_std = 1e0
+# no_ndc=True
+# 
+# lrate=5e-5
+# latent_lrate=5e-4
+# 
+# train_all=True
+# 
+# #Light Direction
+# viewdirs_dims=3
+# use_light_dirs=True
+# light_idx = [0]
+# 
+# # Masking
+# load_mask = True
+# acc_loss = False
+# acc_loss_weight = 0.05
+# 
+# #Aligned Multiple IDs
+# poses_bounds_fn=poses_bounds_aligned.npy
+# 
+# #Custom Mapping
+# use_custom_mapping=True
+# use_sine=True
+# skips=-1
+# 
+# # Positional Encoding
+# multires = 0
+# multires_views = 0
+# 
+# ## Shading Network
+# use_shading_nw=False

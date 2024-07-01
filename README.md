@@ -65,6 +65,11 @@ year={2022}
 
 ## Getting Started
 
-## Testing
+More details coming soon ...
 
-## Relighting
+## Testing 
+
+### Only View Synthesis
+
+### View Synthesis and Religting
+
